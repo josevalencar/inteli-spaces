@@ -1,6 +1,6 @@
 # Inteli Spaces in VR
 
-![Current project](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTVlaXIyYWpmZ2RxbjM3YzgzMGgwdTBndTRuazZhZnczcm5ieWlwaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FI2247ujrLEHD8lpyv/giphy-downsized-large.gif)
+![Current project](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjg3bGRscGR0enZ2ZG0wMWxyaXhld2tuNXFzM2o0bjFvMzg0dW8yZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vdjJ0dsgVVsXiypRzE/giphy-downsized-large.gif)
 
 This project creates a simple virtual reality scene using [A-Frame](https://aframe.io/), displaying 360-degree views of the Inteli environments. The scene features a skybox with a panoramic image and a text label.
 
