@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { OrbitControls, Gltf } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
+import Skybox from './ProceduralSkybox'
 
 export const Experience = () => {
   const controls = useThree((state) => state.controls)
@@ -16,7 +17,7 @@ export const Experience = () => {
     <>
       <OrbitControls makeDefault />
 
-      <Gltf src="models/uploads_files_4381654_LightBlueSky.glb" />
+      <Skybox textureUrl="/textures/the_adventures_of_sherlock_holmes_1.jpg" />
 
       <mesh>
         <boxGeometry />

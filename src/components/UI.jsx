@@ -51,12 +51,12 @@ export function UI() {
                   {[
                     {
                       title: "Experiencia Inteli",
-                      image: "images/the_adventures_of_sherlock_holmes_1.jpg",
+                      image: "textures/the_adventures_of_sherlock_holmes_1.jpg",
                       onClick: () => console.log("Experiência clicked"),
                     },
                     {
                       title: "Espacos do Inteli",
-                      image: "images/the_adventures_of_sherlock_holmes_9.jpg",
+                      image: "textures/the_adventures_of_sherlock_holmes_9.jpg",
                       onClick: () => setView("espacos"),
                     },
                   ].map(({ title, image, onClick }, idx) => (
@@ -99,15 +99,15 @@ export function UI() {
                   {[
                     {
                       title: "Auditorio",
-                      image: "images/the_adventures_of_sherlock_holmes_10.jpg",
+                      image: "textures/the_adventures_of_sherlock_holmes_10.jpg",
                     },
                     {
                       title: "Atelie",
-                      image: "images/the_adventures_of_sherlock_holmes_9.jpg",
+                      image: "textures/the_adventures_of_sherlock_holmes_9.jpg",
                     },
                     {
                       title: "Laboratorio Maker",
-                      image: "images/the_adventures_of_sherlock_holmes_1.jpg",
+                      image: "textures/the_adventures_of_sherlock_holmes_1.jpg",
                     },
                   ].map(({ title, image }, idx) => (
                     <Container key={idx} flexDirection="column" gap={4}>
