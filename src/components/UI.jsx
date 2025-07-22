@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Container, Image, Root, Text } from "@react-three/uikit";
 import { Button, Card, Defaults } from "@react-three/uikit-apfel";
 import { useXR } from "@react-three/xr";
@@ -7,10 +7,27 @@ import { useFont } from "@react-three/drei";
 
 useFont.preload("/fonts/Roboto-Regular.json");
 
-export function UI() {
+export function UI({ triggerTransition }) {
   const mode = useXR((state) => state.mode);
   const session = useXR((state) => state.session);
   const [view, setView] = useState("main");
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    // Initialize audio element
+    audioRef.current = new Audio("/audio/metaverse.mp3");
+    audioRef.current.volume = 0.7; // Set volume to 70%
+  }, []);
+
+  const handleExperienciaClick = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(error => {
+        console.error("Error playing audio:", error);
+      });
+    }
+    if (triggerTransition) triggerTransition();
+    console.log("Experiência clicked");
+  };
 
   return (
     <Defaults>
@@ -52,7 +69,7 @@ export function UI() {
                     {
                       title: "Experiencia Inteli",
                       image: "textures/the_adventures_of_sherlock_holmes_1.jpg",
-                      onClick: () => console.log("Experiência clicked"),
+                      onClick: handleExperienciaClick,
                     },
                     {
                       title: "Espacos do Inteli",
