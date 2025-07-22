@@ -136,7 +136,7 @@ export function UI({ triggerTransition }) {
                         hover={{ backgroundOpacity: 0.5 }}
                         borderRadius={16}
                         flexDirection={"column"}
-                        alignItems="center"
+                        alignItems="center" 
                         gap={4}
                         padding={4}
                       >
