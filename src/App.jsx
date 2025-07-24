@@ -3,9 +3,8 @@ import { XR, XROrigin, createXRStore } from "@react-three/xr";
 import { Float, Bvh } from "@react-three/drei";
 import { Experience } from "./components/Experience";
 import { UI } from "./components/UI";
-import { useState } from "react";
-import { TransitionManager } from "./components/TransitionManager";
 import { CustomGeometryParticles } from "./components/Particles"; // Corrected import path
+import { useState } from "react";
 
 export const store = createXRStore({
   controller: undefined,
@@ -13,50 +12,61 @@ export const store = createXRStore({
   planeDetection: false,
 });
 
-function App() {
-  const [transitionProgress, setTransitionProgress] = useState(0);
-  const [inTransition, setInTransition] = useState(false);
-  const [showBlackSkybox, setShowBlackSkybox] = useState(false);
+const skyboxTextures = [
+  "/textures/the_adventures_of_sherlock_holmes_1.jpg",
+  "/textures/the_adventures_of_sherlock_holmes_9.jpg",
+  "/textures/the_adventures_of_sherlock_holmes_10.jpg",
+  "/textures/meditations.jpg"
+];
 
-  const triggerTransition = () => {
-    setInTransition(true);
-    setTransitionProgress(0);
-    setShowBlackSkybox(false);
+function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(null); // for transition
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Handler for UI button
+  const handleNextSkybox = () => {
+    if (isTransitioning) return;
+    setNextIndex((currentIndex + 1) % skyboxTextures.length);
+    setIsTransitioning(true);
   };
 
+  // Handler for when transition completes
+  const handleTransitionComplete = () => {
+    setCurrentIndex(nextIndex);
+    setNextIndex(null);
+    setIsTransitioning(false);
+  };
+
+  console.log('App:', { currentIndex, nextIndex, isTransitioning, currentTexture: skyboxTextures[currentIndex], nextTexture: nextIndex !== null ? skyboxTextures[nextIndex] : null });
   return (
-    <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
-      {!showBlackSkybox && <color attach="background" args={["#ececec"]} />}
+    <Canvas shadows camera={{ position: [0.18, 0.60, 3.90], fov: 40 }}>
       <XR store={store}>
         <group position-y={1} position-z={-5}>
           <Float rotationIntensity={0.4} speed={1.5}>
-            <UI triggerTransition={triggerTransition} />
+            <UI onNextSkybox={handleNextSkybox} />
           </Float>
         </group>
-        {!showBlackSkybox && (
-          <group position-y={-1}>
-            <Bvh firstHitOnly>
-              <Experience />
-            </Bvh>
-            <XROrigin position-z={0.2} />
-          </group>
-        )}
-        {showBlackSkybox && (
-           <group position-y={-1}>
-             <CustomGeometryParticles count={4000} />
-             <XROrigin position-z={0.2} />
-           </group>
-        )}
+        <group position-y={-1}>
+          <Bvh firstHitOnly>
+            <Experience
+              currentTexture={skyboxTextures[currentIndex]}
+              nextTexture={nextIndex !== null ? skyboxTextures[nextIndex] : null}
+              isTransitioning={isTransitioning}
+              onTransitionComplete={handleTransitionComplete}
+            />
+          </Bvh>
+          <XROrigin position-z={0.2} />
+        </group>
+        {/* Particles positioned at camera origin with configurable rotation speed and size */}
+        <CustomGeometryParticles 
+          count={1000} 
+          rotationSpeed={0.0009} 
+          sizeMultiplier={5.0}
+          baseSize={5.0}
+        />
+        <XROrigin position-z={0.2} />
       </XR>
-      <TransitionManager
-        triggerTransition={triggerTransition}
-        inTransition={inTransition}
-        setInTransition={setInTransition}
-        showBlackSkybox={showBlackSkybox}
-        setShowBlackSkybox={setShowBlackSkybox}
-        transitionProgress={transitionProgress}
-        setTransitionProgress={setTransitionProgress}
-      />
     </Canvas>
   );
 }

@@ -4,29 +4,30 @@ import { Button, Card, Defaults } from "@react-three/uikit-apfel";
 import { useXR } from "@react-three/xr";
 import { store } from "../App";
 import { useFont } from "@react-three/drei";
+import { useSkyboxStore } from '../store/useSkyboxStore';
 
 useFont.preload("/fonts/Roboto-Regular.json");
 
-export function UI({ triggerTransition }) {
+export function UI() {
   const mode = useXR((state) => state.mode);
   const session = useXR((state) => state.session);
   const [view, setView] = useState("main");
-  const audioRef = useRef(null);
+  // const audioRef = useRef(null);
+  const nextSkybox = useSkyboxStore((state) => state.nextSkybox);
 
-  useEffect(() => {
-    // Initialize audio element
-    audioRef.current = new Audio("/audio/metaverse.mp3");
-    audioRef.current.volume = 0.7; // Set volume to 70%
-  }, []);
+  // useEffect(() => {
+  //   // Initialize audio element
+  //   audioRef.current = new Audio("/audio/metaverse.mp3");
+  //   audioRef.current.volume = 0.7; // Set volume to 70%
+  // }, []);
 
   const handleExperienciaClick = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(error => {
-        console.error("Error playing audio:", error);
-      });
-    }
-    if (triggerTransition) triggerTransition();
-    console.log("Experiência clicked");
+    // if (audioRef.current) {
+    //   audioRef.current.play().catch(error => {
+    //     console.error("Error playing audio:", error);
+    //   });
+    // }
+    nextSkybox();
   };
 
   return (

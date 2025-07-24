@@ -1,5 +1,8 @@
 uniform float uTime;
 uniform float uRadius;
+uniform float uRotationSpeed;
+uniform float uSizeMultiplier;
+uniform float uBaseSize;
 
 varying float vDistance;
 
@@ -17,8 +20,8 @@ mat3 rotation3dY(float angle) {
 
 void main() {
   float distanceFactor = pow(uRadius - distance(position, vec3(0.0)), 1.5);
-  float size = distanceFactor * 10.0 + 10.0;
-  vec3 particlePosition = position * rotation3dY(uTime * 0.3 * distanceFactor);
+  float size = distanceFactor * uSizeMultiplier + uBaseSize;
+  vec3 particlePosition = position * rotation3dY(uTime * uRotationSpeed * distanceFactor);
 
   vDistance = distanceFactor;
 
