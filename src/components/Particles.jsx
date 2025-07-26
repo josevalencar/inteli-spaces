@@ -14,6 +14,7 @@ const CustomParticlesMaterial = shaderMaterial(
     uRotationSpeed: 0.3,
     uSizeMultiplier: 10.0,
     uBaseSize: 10.0,
+    uOpacity: 1.0,
   },
   vertexShader,
   fragmentShader,
@@ -30,7 +31,8 @@ export const CustomGeometryParticles = (props) => {
     count, 
     rotationSpeed = 0.3, 
     sizeMultiplier = 10.0, 
-    baseSize = 10.0 
+    baseSize = 10.0,
+    opacity = 1.0
   } = props;
   const radius = 8; // Increased radius significantly for more spread
 
@@ -88,6 +90,7 @@ export const CustomGeometryParticles = (props) => {
       materialRef.current.uRotationSpeed = rotationSpeed;
       materialRef.current.uSizeMultiplier = sizeMultiplier;
       materialRef.current.uBaseSize = baseSize;
+      materialRef.current.uOpacity = opacity;
     }
   });
 
@@ -108,6 +111,7 @@ export const CustomGeometryParticles = (props) => {
         uRotationSpeed={rotationSpeed}
         uSizeMultiplier={sizeMultiplier}
         uBaseSize={baseSize}
+        uOpacity={opacity}
       />
     </points>
   );
