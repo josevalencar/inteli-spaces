@@ -3,8 +3,8 @@ import { useFrame, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { shaderMaterial } from "@react-three/drei";
 
-import vertexShader from "../vertexShader.glsl?raw";
-import fragmentShader from "../fragmentShader.glsl?raw";
+import vertexShader from "../shaders/particles/vertex.glsl?raw";
+import fragmentShader from "../shaders/particles/fragment.glsl?raw";
 
 // Create a custom material class using drei's shaderMaterial utility
 const CustomParticlesMaterial = shaderMaterial(
