@@ -22,7 +22,6 @@ export const SceneManager = ({ particleState, onStartParticles }) => {
   const sceneComponents = {
     [SCENE_TYPES.MENU]: (
       <MenuScene 
-        particleState={particleState}
         onStartParticles={onStartParticles}
       />
     ),
