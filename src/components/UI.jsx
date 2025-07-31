@@ -74,12 +74,11 @@ function ActualVideoDisplay({ src, ...props }) {
   return <Image {...props} src={texture} />;
 }
 
-export function UI({ onStartParticles }) {
+export function UI({ onStartParticles, onStartExperience }) {
   const mode = useXR((state) => state.mode);
   const session = useXR((state) => state.session);
   const [view, setView] = useState("main");
   const audioRef = useRef(null);
-  const nextSkybox = useSkyboxStore((state) => state.nextSkybox);
   const skyboxTextures = useSkyboxStore((state) => state.skyboxTextures);
 
   useEffect(() => {
@@ -94,12 +93,15 @@ export function UI({ onStartParticles }) {
         console.error("Error playing audio:", error);
       });
     }
-    nextSkybox();
-    setView("experiencia");
     
     // Start particle system
     if (onStartParticles) {
       onStartParticles();
+    }
+    
+    // Start the scene-based experience
+    if (onStartExperience) {
+      onStartExperience();
     }
   };
 
