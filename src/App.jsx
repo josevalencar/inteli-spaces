@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { XR, XROrigin, createXRStore } from "@react-three/xr";
 import { Bvh } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
+import { FontFamilyProvider } from "@react-three/uikit";
 import { SceneManager } from "./components/SceneManager";
 import { useState, useEffect } from "react";
 
@@ -120,19 +121,31 @@ function App() {
   return (
     <Canvas shadows camera={{ position: [0.18, 0.60, 3.90], fov: 40 }}>
       <XR store={store}>
-        {/* Main scene manager handles all scenes and transitions */}
-        <group position-y={-1}>
-          <Bvh firstHitOnly>
-            <SceneManager 
-              particleState={particleState}
-              onStartParticles={handleStartParticles}
-            />
-          </Bvh>
-          <XROrigin position-z={0.2} />
-        </group>
-        
-        {/* Camera controls for non-VR mode */}
-        <OrbitControls makeDefault />
+        <FontFamilyProvider
+          roboto={{
+            medium: "/fonts/fixed-roboto.json",
+          }}
+        >
+          {/* Main scene manager handles all scenes and transitions */}
+          <group position-y={-1}>
+            <Bvh firstHitOnly>
+              <SceneManager 
+                particleState={particleState}
+                onStartParticles={handleStartParticles}
+              />
+            </Bvh>
+            <XROrigin position-z={0.2} />
+          </group>
+          
+          {/* Camera controls for non-VR mode */}
+          <OrbitControls 
+            makeDefault 
+            maxDistance={8}
+            minDistance={1}
+            maxPolarAngle={Math.PI * 0.8}
+            minPolarAngle={Math.PI * 0.2}
+          />
+        </FontFamilyProvider>
       </XR>
     </Canvas>
   );

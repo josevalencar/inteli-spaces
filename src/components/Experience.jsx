@@ -44,7 +44,13 @@ export const Experience = () => {
 
   return (
     <>
-      <OrbitControls makeDefault />
+      <OrbitControls 
+        makeDefault 
+        maxDistance={8}
+        minDistance={1}
+        maxPolarAngle={Math.PI * 0.8}
+        minPolarAngle={Math.PI * 0.2}
+      />
       <Skybox
         ref={skyboxRef}
         currentTexture={skyboxTextureObjects[currentSkyboxIndex]}

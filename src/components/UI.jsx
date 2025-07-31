@@ -3,10 +3,8 @@ import { Container, Image, Root, Text } from "@react-three/uikit";
 import { Button, Card, Defaults } from "@react-three/uikit-apfel";
 import { useXR } from "@react-three/xr";
 import { store } from "../App";
-import { useFont, useVideoTexture } from "@react-three/drei";
+import { useVideoTexture } from "@react-three/drei";
 import { useSkyboxStore } from '../store/useSkyboxStore';
-
-useFont.preload("/fonts/Roboto-Regular.json");
 
 // Simple Video Display Component
 function VideoDisplay({ src, fallbackSrc, ...props }) {
@@ -131,7 +129,7 @@ export function UI({ onStartParticles, onStartExperience }) {
         />
         
         <Text
-          font="/fonts/Roboto-Regular.json"
+          fontFamily="roboto"
           fontSize={32}
           fontWeight="bold"
           color="#ffffff"
@@ -140,7 +138,7 @@ export function UI({ onStartParticles, onStartExperience }) {
           Experiência Inteli
         </Text>
         <Text
-          font="/fonts/Roboto-Regular.json"
+          fontFamily="roboto"
           fontSize={18}
           color="#cccccc"
           textAlign="center"
@@ -181,7 +179,7 @@ export function UI({ onStartParticles, onStartExperience }) {
           onClick={() => window.open("https://www.inteli.edu.br/", "_blank")}
         />
         <Text
-          font="/fonts/Roboto-Regular.json"
+          fontFamily="roboto"
           fontSize={20}
           onClick={() => window.open("https://www.inteli.edu.br/", "_blank")}
         >
@@ -197,12 +195,12 @@ export function UI({ onStartParticles, onStartExperience }) {
             <Container flexDirection="row" gap={8}>
               {[
                 {
-                  title: "Experiencia Inteli",
+                  title: "Experiência Inteli",
                   image: skyboxTextures[0], // Use first texture from store
                   onClick: handleExperienciaClick,
                 },
                 {
-                  title: "Espacos do Inteli",
+                  title: "Espaços do Inteli",
                   image: skyboxTextures[4], // Use fifth texture from store (the_adventures_of_sherlock_holmes_9.jpg)
                   onClick: () => setView("espacos"),
                 },
@@ -229,7 +227,7 @@ export function UI({ onStartParticles, onStartExperience }) {
                       keepAspectRatio={false}
                     />
                     <Text
-                      font="/fonts/Roboto-Regular.json"
+                      fontFamily="roboto"
                       maxWidth={142}
                       fontSize={13}
                       textAlign="center"
@@ -279,7 +277,7 @@ export function UI({ onStartParticles, onStartExperience }) {
                       keepAspectRatio={false}
                     />
                     <Text
-                      font="/fonts/Roboto-Regular.json"
+                      fontFamily="roboto"
                       maxWidth={142}
                       fontSize={13}
                       textAlign="center"

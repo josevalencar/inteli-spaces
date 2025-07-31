@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Float } from '@react-three/drei';
+import { Container, Root, Text } from "@react-three/uikit";
+import { Card, Defaults } from "@react-three/uikit-apfel";
 import { useSkyboxStore } from '../../store/useSkyboxStore';
 import { useSceneStore } from '../../store/useSceneStore';
 import ProceduralSkybox from '../ProceduralSkybox';
@@ -144,6 +147,71 @@ export const ExperienceScene1 = () => {
           opacity={particleState.opacity}
         />
       )}
+
+      {/* Subtitle UI positioned in 3D space */}
+      <group position-y={1} position-z={-4}>
+        <Float rotationIntensity={0.2} speed={2} floatIntensity={0.5}>
+          <Defaults>
+            <Root>
+              <Container
+                flexDirection="column"
+                alignItems="center"
+                gap={16}
+              >
+                <Card
+                  borderRadius={24}
+                  padding={20}
+                  flexDirection="column"
+                  alignItems="center"
+                  gap={12}
+                  backgroundOpacity={0.8}
+                  backgroundColor="#1a1a1a"
+                >
+                  <Text
+                    fontFamily="roboto"
+                    fontSize={24}
+                    fontWeight="bold"
+                    color="#ffffff"
+                    textAlign="center"
+                  >
+                    Primeira Experiência
+                  </Text>
+                  <Text
+                    fontFamily="roboto"
+                    fontSize={16}
+                    color="#cccccc"
+                    textAlign="center"
+                    maxWidth={400}
+                  >
+                    Mergulhe nos sons ambientais que conectam tecnologia e natureza
+                  </Text>
+                  <Container
+                    flexDirection="row"
+                    alignItems="center"
+                    gap={8}
+                    marginTop={8}
+                  >
+                    <Text
+                      fontSize={14}
+                      color="#888888"
+                    >
+                      🎵
+                    </Text>
+                    <Text
+                      fontFamily="roboto"
+                      fontSize={14}
+                      color="#888888"
+                      fontStyle="italic"
+                    >
+                      Audio: Paisagem Sonora Imersiva
+                    </Text>
+                  </Container>
+                </Card>
+              </Container>
+            </Root>
+          </Defaults>
+        </Float>
+      </group>
     </>
   );
 };
