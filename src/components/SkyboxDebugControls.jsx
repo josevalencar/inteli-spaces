@@ -6,15 +6,8 @@ import { useSkyboxStore } from '../store/useSkyboxStore';
 export const SkyboxDebugControls = ({ position = [0, 0, 0] }) => {
   const {
     nextSkybox,
-    toggleTransitionType,
-    transitionType,
     currentSkyboxIndex
   } = useSkyboxStore();
-
-  const transitionTypeNames = {
-    0: 'Grid Pattern',
-    1: 'FBM Noise'
-  };
 
   return (
     <group position={position}>
@@ -34,7 +27,7 @@ export const SkyboxDebugControls = ({ position = [0, 0, 0] }) => {
             </Text>
             
             <Text fontSize={12} color="#aaa" textAlign="center">
-              Current: {currentSkyboxIndex} | Type: {transitionTypeNames[transitionType]}
+              Current: {currentSkyboxIndex} | FBM Noise Transition
             </Text>
             
             <Button 
@@ -47,15 +40,7 @@ export const SkyboxDebugControls = ({ position = [0, 0, 0] }) => {
               </Text>
             </Button>
             
-            <Button 
-              onClick={toggleTransitionType}
-              variant="rect"
-              size="sm"
-            >
-              <Text fontSize={12}>
-                Toggle: {transitionTypeNames[transitionType === 0 ? 1 : 0]}
-              </Text>
-            </Button>
+
           </Container>
         </Root>
       </Defaults>

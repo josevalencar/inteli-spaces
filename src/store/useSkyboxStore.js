@@ -7,7 +7,7 @@ const textureUrls = [
   "/textures/the_adventures_of_sherlock_holmes_10.jpg",
   "/textures/meditations.jpg",
   "/textures/the_adventures_of_sherlock_holmes_9.jpg",
-  "/textures/the_adventures_of_sherlock_holmes_1.jpg",
+  // "/textures/the_adventures_of_sherlock_holmes_1.jpg",
 ];
 
 const loader = new THREE.TextureLoader();
@@ -18,7 +18,6 @@ export const useSkyboxStore = create((set, get) => ({
   skyboxTextureObjects: preloadedTextures,
   currentSkyboxIndex: 0,
   previousSkyboxIndex: 0,
-  transitionType: 0, // 0: grid (both), 1: FBM
   transitionSpeed: 2,
   
   setSkyboxIndex: (index) => {
@@ -37,9 +36,5 @@ export const useSkyboxStore = create((set, get) => ({
     get().setSkyboxIndex(nextIndex);
   },
   
-  toggleTransitionType: () => set((state) => ({
-    transitionType: state.transitionType === 0 ? 1 : 0
-  })),
-  
-  setTransitionType: (type) => set({ transitionType: type }),
+
 })); 

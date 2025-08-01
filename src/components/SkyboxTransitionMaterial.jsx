@@ -6,7 +6,6 @@ export const SkyboxTransitionMaterial = shaderMaterial(
     uProgression: 1,
     uSkyboxA: undefined,
     uSkyboxB: undefined,
-    uTransition: 0, // 0: grid (both), 1: FBM
     uRepeat: 3,
     uSmoothness: 0.3,
   },
@@ -27,7 +26,6 @@ export const SkyboxTransitionMaterial = shaderMaterial(
     uniform sampler2D uSkyboxB;
     uniform float uProgression;
     uniform float uRepeat;
-    uniform int uTransition;
     uniform float uSmoothness;
 
     #include "lygia/generative/fbm.glsl"
@@ -49,14 +47,8 @@ export const SkyboxTransitionMaterial = shaderMaterial(
       vec4 skyboxA = texture2D(uSkyboxA, uv);
       vec4 skyboxB = texture2D(uSkyboxB, uv);
 
-      float pct = 1.0;
-      
-      if (uTransition == 0) { // GRID PATTERN (Both)
-        pct = mod(uv.x * uRepeat, 1.0) * mod(uv.y * uRepeat, 1.0);
-      }
-      else if (uTransition == 1) { // FBM NOISE
-        pct = fbm(uv * uRepeat) * 0.5 + 0.5;
-      }
+      // Use FBM noise for transition pattern
+      float pct = fbm(uv * uRepeat) * 0.5 + 0.5;
 
       // Apply smooth progression with controllable smoothness
       float smoothProgression = remap(uProgression, 0.0, 1.0, -uSmoothness / 2.0, 1.0 + uSmoothness / 2.0);

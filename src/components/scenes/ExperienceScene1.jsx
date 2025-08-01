@@ -2,16 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Float } from '@react-three/drei';
 import { Container, Root, Text } from "@react-three/uikit";
 import { Card, Defaults } from "@react-three/uikit-apfel";
-import { useSkyboxStore } from '../../store/useSkyboxStore';
-import { useSceneStore } from '../../store/useSceneStore';
+
 import ProceduralSkybox from '../ProceduralSkybox';
 import { CustomGeometryParticles } from '../Particles';
 
 export const ExperienceScene1 = () => {
-  const skyboxTextureObjects = useSkyboxStore((state) => state.skyboxTextureObjects);
-  const getSkyboxIndex = useSceneStore((state) => state.getSkyboxIndex);
-  
-  const skyboxIndex = getSkyboxIndex();
 
   // Particle system state (scene-specific)
   const [particleState, setParticleState] = useState({
@@ -130,12 +125,7 @@ export const ExperienceScene1 = () => {
   return (
     <>
       {/* Skybox for first experience */}
-      <ProceduralSkybox
-        currentTexture={skyboxTextureObjects[skyboxIndex]}
-        previousTexture={null}
-        isTransitioning={false}
-        transitionDuration={0.8}
-      />
+      <ProceduralSkybox />
       
       {/* Scene-specific particles with same configuration as before */}
       {particleState.isActive && (

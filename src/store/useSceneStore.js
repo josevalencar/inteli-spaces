@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useSkyboxStore } from './useSkyboxStore';
 
 // Scene types and configurations
 export const SCENE_TYPES = {
@@ -84,6 +85,13 @@ export const useSceneStore = create((set, get) => {
 
       console.log(`Scene transition: ${currentScene} -> ${sceneType}`);
       
+      // Trigger skybox transition following transition-example pattern
+      const newSceneConfig = SCENE_CONFIG[sceneType];
+      const newSkyboxIndex = newSceneConfig?.skyboxIndex || 0;
+      
+      // Update skybox store to trigger transition (same as clicking preview or next button)
+      useSkyboxStore.getState().setSkyboxIndex(newSkyboxIndex);
+      
       set((state) => ({
         isTransitioning: true,
         transitionProgress: 0,
@@ -138,6 +146,8 @@ export const useSceneStore = create((set, get) => {
 
     returnToMenu: () => {
       clearTimer();
+      // Trigger skybox transition back to menu (index 0)
+      useSkyboxStore.getState().setSkyboxIndex(0);
       get().setScene(SCENE_TYPES.MENU);
     },
 

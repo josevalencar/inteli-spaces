@@ -5,7 +5,7 @@ import { useSkyboxStore } from "../store/useSkyboxStore";
 import { SkyboxRenderer } from "./SkyboxRenderer";
 
 const Skybox = forwardRef(() => {
-  const { currentSkyboxIndex, previousSkyboxIndex, transitionType, transitionSpeed, skyboxTextureObjects } = useSkyboxStore();
+  const { currentSkyboxIndex, previousSkyboxIndex, transitionSpeed, skyboxTextureObjects } = useSkyboxStore();
   const renderMaterial = useRef();
   
   const currentTexture = skyboxTextureObjects[currentSkyboxIndex];
@@ -41,7 +41,6 @@ const Skybox = forwardRef(() => {
       ref={renderMaterial}
       currentSkybox={currentTexture}
       previousSkybox={previousTexture}
-      transitionType={transitionType}
       transitionSpeed={transitionSpeed}
       repeat={3}
       smoothness={0.3}

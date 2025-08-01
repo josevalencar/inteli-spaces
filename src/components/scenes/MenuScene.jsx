@@ -3,7 +3,7 @@ import { Float } from '@react-three/drei';
 import { Container, Root, Image } from "@react-three/uikit";
 import { Defaults } from "@react-three/uikit-apfel";
 import { UI } from '../UI';
-import { SkyboxDebugControls } from '../SkyboxDebugControls';
+
 import { useSkyboxStore } from '../../store/useSkyboxStore';
 import { useSceneStore } from '../../store/useSceneStore';
 import ProceduralSkybox from '../ProceduralSkybox';
@@ -12,8 +12,7 @@ export const MenuScene = ({ onStartParticles }) => {
   const {
     currentSkyboxIndex,
     setSkyboxIndex,
-    nextSkybox,
-    toggleTransitionType
+    nextSkybox
   } = useSkyboxStore();
   
   const startExperience = useSceneStore((state) => state.startExperience);
@@ -65,9 +64,6 @@ export const MenuScene = ({ onStartParticles }) => {
           </Float>
         </group>
       ))}
-
-      {/* Debug controls for skybox transitions */}
-      <SkyboxDebugControls position={[0, 3, -3]} />
 
       {/* UI positioned in XR space (following game-example pattern) */}
       <group position-y={1} position-z={-5}>

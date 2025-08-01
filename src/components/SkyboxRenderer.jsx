@@ -10,7 +10,6 @@ extend({ SkyboxTransitionMaterial });
 export const SkyboxRenderer = forwardRef(({ 
   currentSkybox, 
   previousSkybox, 
-  transitionType = 0, // 0: grid, 1: FBM
   transitionSpeed = 2,
   repeat = 3,
   smoothness = 0.3 
@@ -26,7 +25,7 @@ export const SkyboxRenderer = forwardRef(({
       delta * transitionSpeed
     );
     
-    ref.current.uTransition = transitionType;
+
     ref.current.uRepeat = repeat;
     ref.current.uSmoothness = smoothness;
   });
