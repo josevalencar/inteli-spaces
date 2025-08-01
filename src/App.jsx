@@ -134,7 +134,7 @@ function App() {
                 onStartParticles={handleStartParticles}
               />
             </Bvh>
-            <XROrigin position-z={0.2} />
+            <XROrigin position-z={0.1} />
           </group>
           
           {/* Camera controls for non-VR mode */}

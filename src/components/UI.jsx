@@ -162,137 +162,52 @@ export function UI({ onStartParticles, onStartExperience }) {
   const renderMainUI = () => (
     <Container
       flexDirection="column"
-      md={{ flexDirection: "row" }}
       alignItems="center"
       gap={32}
     >
       <Card
         borderRadius={32}
-        padding={16}
+        padding={32}
         flexDirection={"column"}
         alignItems={"center"}
-        gap={8}
+        gap={16}
+        width={220}
+        height={200}
       >
         <Image
-          src="images/logo-inteli-branco.png"
+          src="images/logo.png"
           width={120}
           onClick={() => window.open("https://www.inteli.edu.br/", "_blank")}
         />
-        <Text
+        {/* <Text
           fontFamily="roboto"
           fontSize={20}
           onClick={() => window.open("https://www.inteli.edu.br/", "_blank")}
         >
           spaces
-        </Text>
+        </Text> */}
         <Container
           flexDirection="column"
           justifyContent="space-between"
           alignItems="stretch"
           gapRow={8}
         >
-          {view === "main" ? (
-            <Container flexDirection="row" gap={8}>
-              {[
-                {
-                  title: "Experiência Inteli",
-                  image: skyboxTextures[0], // Use first texture from store
-                  onClick: handleExperienciaClick,
-                },
-                {
-                  title: "Espaços do Inteli",
-                  image: skyboxTextures[4], // Use fifth texture from store (the_adventures_of_sherlock_holmes_9.jpg)
-                  onClick: () => setView("espacos"),
-                },
-              ].map(({ title, image, onClick }, idx) => (
-                <Container key={idx} flexDirection="column" gap={4}>
-                  <Card
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onClick();
-                    }}
-                    hover={{ backgroundOpacity: 0.5 }}
-                    borderRadius={16}
-                    flexDirection={"column"}
-                    alignItems="center"
-                    gap={4}
-                    padding={4}
-                  >
-                    <Image
-                      src={image}
-                      width={142}
-                      height={142}
-                      objectFit="cover"
-                      borderRadius={16}
-                      keepAspectRatio={false}
-                    />
-                    <Text
-                      fontFamily="roboto"
-                      maxWidth={142}
-                      fontSize={13}
-                      textAlign="center"
-                      fontWeight="bold"
-                    >
-                      {title}
-                    </Text>
-                  </Card>
-                </Container>
-              ))}
-            </Container>
-          ) : (
-            <Container flexDirection="row" gap={8}>
-              {[
-                {
-                  title: "Auditorio",
-                  image: skyboxTextures[2], // Use third texture from store (the_adventures_of_sherlock_holmes_10.jpg)
-                },
-                {
-                  title: "Atelie",
-                  image: skyboxTextures[4], // Use fifth texture from store (the_adventures_of_sherlock_holmes_9.jpg)
-                },
-                {
-                  title: "Laboratorio Maker",
-                  image: skyboxTextures[0], // Use first texture from store (the_adventures_of_sherlock_holmes_1.jpg)
-                },
-              ].map(({ title, image }, idx) => (
-                <Container key={idx} flexDirection="column" gap={4}>
-                  <Card
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log(`Selected location: ${title}`);
-                    }}
-                    hover={{ backgroundOpacity: 0.5 }}
-                    borderRadius={16}
-                    flexDirection={"column"}
-                    alignItems="center" 
-                    gap={4}
-                    padding={4}
-                  >
-                    <Image
-                      src={image}
-                      width={142}
-                      height={142}
-                      objectFit="cover"
-                      borderRadius={16}
-                      keepAspectRatio={false}
-                    />
-                    <Text
-                      fontFamily="roboto"
-                      maxWidth={142}
-                      fontSize={13}
-                      textAlign="center"
-                      fontWeight="bold"
-                    >
-                      {title}
-                    </Text>
-                  </Card>
-                </Container>
-              ))}
-            </Container>
-          )}
           <Container
             flexDirection="row"
-            justifyContent={"space-evenly"}
+            justifyContent="center"
+          >
+            <Button
+              variant="rect"
+              size="sm"
+              platter
+              onClick={handleExperienciaClick}
+            >
+              <Text>Começar</Text>
+            </Button>
+          </Container>
+          <Container
+            flexDirection="row"
+            justifyContent="center"
             gap={8}
           >
             {mode === null ? (
@@ -300,7 +215,6 @@ export function UI({ onStartParticles, onStartExperience }) {
                 variant="rect"
                 size="sm"
                 platter
-                flexGrow={1}
                 onClick={() => store.enterAR()}
               >
                 <Text>VR/AR</Text>
@@ -310,21 +224,9 @@ export function UI({ onStartParticles, onStartExperience }) {
                 variant="rect"
                 size="sm"
                 platter
-                flexGrow={1}
                 onClick={() => session.end()}
               >
                 <Text>Exit VR</Text>
-              </Button>
-            )}
-            {view !== "main" && view !== "experiencia" && (
-              <Button
-                variant="rect"
-                size="sm"
-                platter
-                flexGrow={1}
-                onClick={() => setView("main")}
-              >
-                <Text>Voltar</Text>
               </Button>
             )}
           </Container>
@@ -335,7 +237,13 @@ export function UI({ onStartParticles, onStartExperience }) {
 
   return (
     <Defaults>
-      <Root>
+      <Root
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
         {view === "experiencia" ? renderExperienciaUI() : renderMainUI()}
       </Root>
     </Defaults>
