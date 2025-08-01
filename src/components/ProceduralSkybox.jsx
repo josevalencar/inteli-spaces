@@ -1,60 +1,51 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
+import { useSkyboxStore } from "../store/useSkyboxStore";
+import { SkyboxRenderer } from "./SkyboxRenderer";
 
-const Skybox = forwardRef(({
-  currentTexture,
-  previousTexture,
-  isTransitioning,
-  transitionDuration = 0.8
-}, ref) => {
-  const [transitionProgress, setTransitionProgress] = useState(1);
+const Skybox = forwardRef(() => {
+  const { currentSkyboxIndex, previousSkyboxIndex, transitionType, transitionSpeed, skyboxTextureObjects } = useSkyboxStore();
+  const renderMaterial = useRef();
+  
+  const currentTexture = skyboxTextureObjects[currentSkyboxIndex];
+  const previousTexture = skyboxTextureObjects[previousSkyboxIndex];
 
+  // Reset progression when skybox changes (following transition-example pattern)
   useEffect(() => {
-    if (isTransitioning) {
-      setTransitionProgress(0);
-      let start;
-      const animate = (timestamp) => {
-        if (!start) start = timestamp;
-        const elapsed = (timestamp - start) / 1000;
-        const progress = Math.min(elapsed / transitionDuration, 1);
-        setTransitionProgress(progress);
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-      requestAnimationFrame(animate);
-    } else {
-      setTransitionProgress(1);
+    if (currentSkyboxIndex === previousSkyboxIndex) {
+      return;
     }
-  }, [isTransitioning, transitionDuration, currentTexture, previousTexture]);
+    if (renderMaterial.current) {
+      renderMaterial.current.uProgression = 0;
+    }
+  }, [currentSkyboxIndex, previousSkyboxIndex]);
 
-  return (
-    <group>
-      {/* Previous skybox (fade out) */}
-      {isTransitioning && previousTexture && (
-        <mesh scale={[9, 9, 9]}>
-          <sphereGeometry args={[1, 128, 128]} />
-          <meshBasicMaterial
-            map={previousTexture}
-            side={THREE.BackSide}
-            toneMapped={false}
-            transparent={true}
-            opacity={1 - transitionProgress}
-          />
-        </mesh>
-      )}
-      {/* Current skybox (fade in) */}
-      <mesh scale={[9, 9, 9]}>
-        <sphereGeometry args={[1, 128, 128]} />
+  // If no previous texture or same texture, show simple skybox
+  if (!previousTexture || currentSkyboxIndex === previousSkyboxIndex) {
+    return (
+      <mesh scale={[50, 50, 50]}>
+        <sphereGeometry args={[1, 64, 64]} />
         <meshBasicMaterial
           map={currentTexture}
           side={THREE.BackSide}
           toneMapped={false}
-          transparent={isTransitioning}
-          opacity={isTransitioning ? transitionProgress : 1}
         />
       </mesh>
-    </group>
+    );
+  }
+
+  // Show transition between previous and current
+  return (
+    <SkyboxRenderer
+      ref={renderMaterial}
+      currentSkybox={currentTexture}
+      previousSkybox={previousTexture}
+      transitionType={transitionType}
+      transitionSpeed={transitionSpeed}
+      repeat={3}
+      smoothness={0.3}
+    />
   );
 });
 

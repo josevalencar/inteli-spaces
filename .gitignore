@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 game-example
+transition-example
 
 # Editor directories and files
 .vscode/*

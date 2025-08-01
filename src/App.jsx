@@ -1,10 +1,14 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import { XR, XROrigin, createXRStore } from "@react-three/xr";
 import { Bvh } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { FontFamilyProvider } from "@react-three/uikit";
 import { SceneManager } from "./components/SceneManager";
+import { SkyboxTransitionMaterial } from "./components/SkyboxTransitionMaterial";
 import { useState, useEffect, useRef } from "react";
+
+// Extend Three.js with our custom material
+extend({ SkyboxTransitionMaterial });
 
 export const store = createXRStore({
   controller: undefined,
