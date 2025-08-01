@@ -136,7 +136,7 @@ function App() {
     };
   }, [particleState.phase, particleState.isActive]);
   return (
-    <Canvas shadows camera={{ position: [0.29, 0.04, 3.94], fov: 40 }}>
+    <Canvas shadows camera={{ position: [-0.10, 0.07, 3.95], fov: 40 }}>
       <XR store={store}>
         <FontFamilyProvider
           roboto={{

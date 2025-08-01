@@ -2,11 +2,12 @@ import { create } from 'zustand';
 import * as THREE from 'three';
 
 const textureUrls = [
-  "/textures/the_adventures_of_sherlock_holmes_1.jpg",
+  "/textures/intro.png",
   "/textures/space.png",
   "/textures/the_adventures_of_sherlock_holmes_10.jpg",
   "/textures/meditations.jpg",
-  "/textures/the_adventures_of_sherlock_holmes_9.jpg"
+  "/textures/the_adventures_of_sherlock_holmes_9.jpg",
+  "/textures/the_adventures_of_sherlock_holmes_1.jpg",
 ];
 
 const loader = new THREE.TextureLoader();
