@@ -164,7 +164,7 @@ export const ExperienceScene1 = () => {
                     color="#ffffff"
                     textAlign="center"
                   >
-                    Primeira Experiência
+                    Entrada
                   </Text>
                   <Text
                     fontFamily="roboto"
@@ -173,7 +173,7 @@ export const ExperienceScene1 = () => {
                     textAlign="center"
                     maxWidth={400}
                   >
-                    Mergulhe nos sons ambientais que conectam tecnologia e natureza
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   </Text>
                   <Container
                     flexDirection="row"
@@ -181,19 +181,14 @@ export const ExperienceScene1 = () => {
                     gap={8}
                     marginTop={8}
                   >
-                    <Text
-                      fontSize={14}
-                      color="#888888"
-                    >
-                      🎵
-                    </Text>
+                  
                     <Text
                       fontFamily="roboto"
                       fontSize={14}
                       color="#888888"
                       fontStyle="italic"
                     >
-                      Audio: Paisagem Sonora Imersiva
+                      Texto adicional
                     </Text>
                   </Container>
                 </Card>

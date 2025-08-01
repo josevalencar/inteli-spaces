@@ -26,9 +26,9 @@ export const MenuScene = ({ onStartParticles }) => {
   // Floating preview positions closer to main UI
   const previewPositions = [
     { position: [-2.0, 2.25, -4.8], textureSrc: skyboxTextures[1], index: 1 },
-    { position: [2.0, 2.25, -4.8], textureSrc: skyboxTextures[2], index: 2 },
+    { position: [2.0, 2.25, -4.95], textureSrc: skyboxTextures[2], index: 2 },
     { position: [-2.0, -0.2, -4.9], textureSrc: skyboxTextures[3], index: 3 },
-    { position: [2.0, -0.2, -4.9], textureSrc: skyboxTextures[4], index: 4 },
+    { position: [2.0, -0.2, -4.8], textureSrc: skyboxTextures[4], index: 4 },
     { position: [-2.75, 1, -4.3], textureSrc: skyboxTextures[0], index: 0 },
     { position: [2.75, 1, -4.3], textureSrc: skyboxTextures[1], index: 1 },
   ];
