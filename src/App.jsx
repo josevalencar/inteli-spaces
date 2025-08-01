@@ -1,16 +1,33 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, XROrigin, createXRStore } from "@react-three/xr";
 import { Bvh } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { FontFamilyProvider } from "@react-three/uikit";
 import { SceneManager } from "./components/SceneManager";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const store = createXRStore({
   controller: undefined,
   meshDetection: false,
   planeDetection: false,
 });
+
+// Debug component to track camera position
+function CameraTracker() {
+  const { camera } = useThree();
+  const lastLogTime = useRef(0);
+  
+  useFrame(() => {
+    const now = Date.now();
+    // Log camera position every 500ms for real-time tracking
+    if (now - lastLogTime.current > 500) {
+      console.log(`📷 Camera: [${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)}]`);
+      lastLogTime.current = now;
+    }
+  });
+  
+  return null;
+}
 
 function App() {
   // Particle system state (simplified)
@@ -119,13 +136,16 @@ function App() {
     };
   }, [particleState.phase, particleState.isActive]);
   return (
-    <Canvas shadows camera={{ position: [0.18, 0.60, 3.90], fov: 40 }}>
+    <Canvas shadows camera={{ position: [0.29, 0.04, 3.94], fov: 40 }}>
       <XR store={store}>
         <FontFamilyProvider
           roboto={{
             medium: "/fonts/fixed-roboto.json",
           }}
         >
+          {/* Debug camera position tracker */}
+          {/* <CameraTracker /> */}
+          
           {/* Main scene manager handles all scenes and transitions */}
           <group position-y={-1}>
             <Bvh firstHitOnly>
