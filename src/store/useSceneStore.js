@@ -1,15 +1,13 @@
 import { create } from 'zustand';
 import { useSkyboxStore } from './useSkyboxStore';
 
-// Scene types and configurations
+// Scene types and configurations - simplified for skybox tour
 export const SCENE_TYPES = {
   MENU: 'MENU',
-  EXPERIENCE_1: 'EXPERIENCE_1',
-  EXPERIENCE_2: 'EXPERIENCE_2',
-  EXPERIENCE_3: 'EXPERIENCE_3',
+  TOUR: 'TOUR',
 };
 
-// Scene configurations with skybox and timing
+// Scene configurations - simplified 
 export const SCENE_CONFIG = {
   [SCENE_TYPES.MENU]: {
     name: 'Menu Scene',
@@ -17,59 +15,19 @@ export const SCENE_CONFIG = {
     duration: null, // Manual progression
     showUI: true,
   },
-  [SCENE_TYPES.EXPERIENCE_1]: {
-    name: 'First Experience',
-    skyboxIndex: 1,
-    duration: 15000, // 15 seconds
-    showUI: false,
-  },
-  [SCENE_TYPES.EXPERIENCE_2]: {
-    name: 'Second Experience', 
-    skyboxIndex: 2,
-    duration: 12000, // 12 seconds
-    showUI: false,
-  },
-  [SCENE_TYPES.EXPERIENCE_3]: {
-    name: 'Third Experience',
-    skyboxIndex: 3,
-    duration: 10000, // 10 seconds
+  [SCENE_TYPES.TOUR]: {
+    name: 'Skybox Tour',
+    skyboxIndex: 1, // Tour will manage its own skybox transitions
+    duration: null, // Tour handles its own timing
     showUI: false,
   },
 };
 
-// Scene progression order
-export const SCENE_PROGRESSION = [
-  SCENE_TYPES.MENU,
-  SCENE_TYPES.EXPERIENCE_1,
-  SCENE_TYPES.EXPERIENCE_2,
-  SCENE_TYPES.EXPERIENCE_3,
-];
-
 export const useSceneStore = create((set, get) => {
-  // Timer management
-  let sceneTimer = null;
-  
-  const clearTimer = () => {
-    if (sceneTimer) {
-      clearTimeout(sceneTimer);
-      sceneTimer = null;
-    }
-  };
-
-  const startSceneTimer = (duration) => {
-    clearTimer();
-    if (duration) {
-      sceneTimer = setTimeout(() => {
-        get().nextScene();
-      }, duration);
-    }
-  };
 
   return {
     // Current scene state
     currentScene: SCENE_TYPES.MENU,
-    isTransitioning: false,
-    transitionProgress: 0,
     
     // Scene history for debugging
     sceneHistory: [SCENE_TYPES.MENU],
@@ -78,76 +36,41 @@ export const useSceneStore = create((set, get) => {
     setScene: (sceneType) => {
       const currentScene = get().currentScene;
       
-      // Don't change if already in this scene or transitioning
-      if (currentScene === sceneType || get().isTransitioning) {
+      // Don't change if already in this scene
+      if (currentScene === sceneType) {
         return;
       }
 
-      console.log(`Scene transition: ${currentScene} -> ${sceneType}`);
+      console.log(`Scene change: ${currentScene} -> ${sceneType}`);
       
-      // Trigger skybox transition following transition-example pattern
-      const newSceneConfig = SCENE_CONFIG[sceneType];
-      const newSkyboxIndex = newSceneConfig?.skyboxIndex || 0;
+      // For TOUR scene, no transition overlay - let TourScene handle skybox transitions
+      if (sceneType === SCENE_TYPES.TOUR) {
+        set({
+          currentScene: sceneType,
+          sceneHistory: [...get().sceneHistory, sceneType],
+        });
+        return;
+      }
       
-      // Update skybox store to trigger transition (same as clicking preview or next button)
-      useSkyboxStore.getState().setSkyboxIndex(newSkyboxIndex);
-      
-      set((state) => ({
-        isTransitioning: true,
-        transitionProgress: 0,
-        sceneHistory: [...state.sceneHistory, sceneType],
-      }));
-
-      // Start transition animation
-      const transitionDuration = 1000; // 1 second transition
-      const startTime = Date.now();
-      
-      const updateTransition = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / transitionDuration, 1);
-        
-        set({ transitionProgress: progress });
-        
-        if (progress < 1) {
-          requestAnimationFrame(updateTransition);
-        } else {
-          // Transition complete
-          clearTimer();
-          set({
-            currentScene: sceneType,
-            isTransitioning: false,
-            transitionProgress: 0,
-          });
-          
-          // Start timer for new scene if it has duration
-          const sceneConfig = SCENE_CONFIG[sceneType];
-          if (sceneConfig?.duration) {
-            startSceneTimer(sceneConfig.duration);
-          }
-        }
-      };
-      
-      updateTransition();
-    },
-
-    nextScene: () => {
-      const currentScene = get().currentScene;
-      const currentIndex = SCENE_PROGRESSION.indexOf(currentScene);
-      const nextIndex = (currentIndex + 1) % SCENE_PROGRESSION.length;
-      const nextScene = SCENE_PROGRESSION[nextIndex];
-      
-      get().setScene(nextScene);
+      // For MENU scene, simple transition with skybox change
+      if (sceneType === SCENE_TYPES.MENU) {
+        // Set intro skybox when returning to menu
+        useSkyboxStore.getState().setSkyboxIndex(0);
+        set({
+          currentScene: sceneType,
+          sceneHistory: [...get().sceneHistory, sceneType],
+        });
+        return;
+      }
     },
 
     startExperience: () => {
-      // Called when "Experiência Inteli" button is clicked
-      get().setScene(SCENE_TYPES.EXPERIENCE_1);
+      // Called when "Experiência Inteli" button is clicked - start tour
+      get().setScene(SCENE_TYPES.TOUR);
     },
 
     returnToMenu: () => {
-      clearTimer();
-      // Trigger skybox transition back to menu (index 0)
-      useSkyboxStore.getState().setSkyboxIndex(0);
+      // Return to menu from tour
       get().setScene(SCENE_TYPES.MENU);
     },
 
@@ -169,7 +92,7 @@ export const useSceneStore = create((set, get) => {
 
     // Cleanup function
     cleanup: () => {
-      clearTimer();
+      // No more timers to clean up - TourScene handles its own
     },
   };
 });
